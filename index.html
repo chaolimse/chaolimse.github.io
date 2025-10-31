@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!-- 声明文档类型和语言 -->
+<html lang="zh">
+<head>
+    <!-- 字符编码，确保中文正常显示 -->
+    <meta charset="UTF-8">
+    <!-- 视口设置，让网页在移动端也能正常显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chao's Lab</title>
+    
+    <style>
+        /* === CSS重置 === */
+        /* 清除浏览器默认的边距和填充，确保一致性 */
+        * {
+            margin: 0;           /* 外边距归零 */
+            padding: 0;          /* 内边距归零 */
+            box-sizing: border-box; /* 盒模型：宽度包含padding和border */
+        }
+        
+        /* === 全局样式 === */
+        body {
+            font-family: 'Arial', sans-serif; /* 字体设置 */
+            line-height: 1.6;    /* 行高，让文字更易读 */
+            color: #333;         /* 文字颜色：深灰色 */
+        }
+        
+        /* === 导航栏样式 === */
+        nav {
+            background: #2c3e50; /* 导航栏背景色：深蓝色 */
+            padding: 1rem;       /* 内边距：1倍根元素字体大小 */
+            position: fixed;     /* 固定定位，滚动时始终在顶部 */
+            width: 100%;         /* 宽度100% */
+            top: 0;              /* 距离顶部0 */
+            z-index: 1000;       /* 层级，确保在其他元素上面 */
+        }
+        
+        /* 导航容器：限制最大宽度并居中 */
+        .nav-container {
+            max-width: 1200px;   /* 最大宽度 */
+            margin: 0 auto;      /* 水平居中 */
+            display: flex;       /* 弹性布局 */
+            justify-content: space-between; /* 两端对齐 */
+            align-items: center; /* 垂直居中 */
+        }
+        
+        /* 网站Logo样式 */
+        .logo {
+            color: white;        /* 文字颜色白色 */
+            font-size: 1.5rem;   /* 字体大小 */
+            font-weight: bold;   /* 粗体 */
+        }
+        
+        /* 导航链接列表 */
+        .nav-links {
+            display: flex;       /* 弹性布局，让链接水平排列 */
+            list-style: none;    /* 移除列表默认样式 */
+        }
+        
+        /* 每个导航项 */
+        .nav-links li {
+            margin-left: 2rem;   /* 左边距，创建间距 */
+        }
+        
+        /* 导航链接 */
+        .nav-links a {
+            color: white;        /* 文字颜色 */
+            text-decoration: none; /* 移除下划线 */
+            transition: color 0.3s; /* 颜色过渡动画，持续0.3秒 */
+        }
+        
+        /* 鼠标悬停时的导航链接 */
+        .nav-links a:hover {
+            color: #3498db;      /* 悬停时变成蓝色 */
+        }
+        
+        /* === 主页横幅区域 === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%; /* 放大背景 */
+            animation: gradient 15s ease infinite; /* 应用动画 */
+        }
+
+/* 定义渐变动画 */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+        
+        /* 横幅内容 */
+        .hero-content h1 {
+            font-size: 3rem;     /* 大标题字体大小 */
+            margin-bottom: 1rem; /* 底部外边距 */
+        }
+        
+        /* === 内容区域通用样式 === */
+        .section {
+            padding: 5rem 2rem;  /* 上下5rem，左右2rem的内边距 */
+            max-width: 1200px;   /* 最大宽度 */
+            margin: 0 auto;      /* 水平居中 */
+        }
+        
+        /* 区域标题 */
+        .section-title {
+            text-align: center;  /* 文字居中 */
+            margin-bottom: 3rem; /* 底部外边距 */
+            font-size: 2.5rem;   /* 字体大小 */
+            color: #2c3e50;      /* 颜色：深蓝色 */
+        }
+        
+        /* === 卡片网格布局 === */
+        .cards-grid {
+            display: grid;       /* 网格布局 */
+            /* 自动适应的列：最小300px，最大1fr（等分剩余空间） */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;           /* 网格间隙 */
+            margin-top: 2rem;    /* 顶部外边距 */
+        }
+        
+        /* 单个卡片样式 */
+        .card {
+            background: white;   /* 背景白色 */
+            border-radius: 10px; /* 圆角 */
+            padding: 2rem;       /* 内边距 */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* 阴影效果 */
+            transition: transform 0.3s, box-shadow 0.3s; /* 过渡动画 */
+            text-align: center;  /* 文字居中 */
+            cursor: pointer;     /* 鼠标指针变成手型 */
+        }
+        
+        /* 卡片悬停效果 */
+        .card:hover {
+            transform: translateY(-5px); /* 向上移动5像素 */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* 加深阴影 */
+        }
+        
+        /* === 页脚样式 === */
+        footer {
+            background: #34495e; /* 背景色 */
+            color: white;        /* 文字颜色 */
+            text-align: center;  /* 文字居中 */
+            padding: 2rem;       /* 内边距 */
+            margin-top: 2rem;    /* 顶部外边距 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        导航栏结构：
+        - nav: 导航容器
+        - .nav-container: 内容容器，限制宽度
+        - .logo: 网站标识
+        - .nav-links: 导航链接列表
+    -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Chao's Lab</div>
+            <ul class="nav-links">
+                <!-- 锚点链接：点击后跳转到对应ID的元素 -->
+                <li><a href="#home">主页</a></li>
+                <li><a href="#photography">影集</a></li>
+                <li><a href="#games">游戏</a></li>
+                <li><a href="#weather">天气</a></li>
+                <li><a href="#others">其他</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 
+        主页横幅区域：
+        - id="home": 用于导航链接跳转
+        - class="hero": 应用横幅样式
+    -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Chao's Lab</h1>
+            <p>Warning: Only the delightfully boring may enter.</p>
+        </div>
+    </section>
+
+    <!-- 摄影集区域 -->
+    <section id="photography" class="section">
+        <h2 class="section-title">大师级摄影作品</h2>
+        <div class="cards-grid">
+            <!-- 
+                卡片结构：
+                - onclick: 点击时调用JavaScript函数
+                - 可以替换为你的实际内容
+            -->
+            <a href="photos.html" style="text-decoration: none; color: inherit;">
+                <div class="card">
+                    <h3>野生动物</h3>
+                    <p></p>
+                </div>
+            </a>
+
+            <div class="card">
+                <h3>城市摄影</h3>
+                <p></p>
+            </div>
+            <div class="card" onclick="showSection('photography')">
+                <h3>硬核户外</h3>
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 游戏区域 -->
+    <section id="games" class="section">
+        <h2 class="section-title">无聊小游戏</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="showSection('games')">
+                <h3>1</h3>
+                <p>1</p>
+            </div>
+            <div class="card" onclick="showSection('games')">
+                <h3>2</h3>
+                <p>2</p>
+            </div>
+            <div class="card" onclick="showSection('games')">
+                <h3>3</h3>
+                <p>3</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 天气区域 -->
+    <section id="weather" class="section">
+        <h2 class="section-title">天气</h2>
+        <div class="card">
+            <h3>本地天气</h3>
+            <p>这里可以接入天气API显示实时天气</p>
+            <!-- 按钮：点击时调用getWeather函数 -->
+            <button onclick="getWeather()">获取天气</button>
+            <!-- 天气信息显示区域 -->
+            <div id="weather-info"></div>
+        </div>
+    </section>
+
+    <!-- 其他项目区域 -->
+    <section id="others" class="section">
+        <h2 class="section-title">其他项目</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="showSection('others')">
+                <h3>AV作品</h3>
+                <p>分享学习心得</p>
+            </div>
+            <div class="card" onclick="showSection('others')">
+                <h3>歌单</h3>
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2025 Chao's Lab.</p>
+    </footer>
+
+    <script>
+        // === 平滑滚动功能 ===
+        // 选择所有以#开头的链接（锚点链接）
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // 为每个链接添加点击事件监听器
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // 阻止默认的跳转行为
+                
+                // 获取目标元素（href属性对应的元素）
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // 平滑滚动到目标元素
+                    target.scrollIntoView({
+                        behavior: 'smooth', // 平滑滚动
+                        block: 'start'      // 对齐到顶部
+                    });
+                }
+            });
+        });
+
+        // === 显示对应部分的函数 ===
+        // 当点击卡片时调用这个函数
+        function showSection(sectionName) {
+            // 弹出提示框（实际项目中可以替换为页面跳转或内容切换）
+            alert(`你点击了 ${sectionName} 部分！这里可以跳转到详细页面。`);
+            // 未来可以在这里添加：
+            // - 跳转到具体页面的逻辑
+            // - 显示详细内容
+            // - 加载动态内容
+        }
+
+        // === 简单的天气功能示例 ===
+        function getWeather() {
+            // 获取显示天气信息的元素
+            const weatherInfo = document.getElementById('weather-info');
+            
+            // 向元素中插入HTML内容（这里是示例数据）
+            weatherInfo.innerHTML = `
+                <p>🌤️ 当前天气：晴朗</p>
+                <p>🌡️ 温度：23°C</p>
+                <p>💨 风速：5 km/h</p>
+                <p><small>（这是示例数据，可以接入真实天气API）</small></p>
+            `;
+            
+            // 实际项目中可以：
+            // 1. 调用天气API（如 OpenWeatherMap）
+            // 2. 处理返回的JSON数据
+            // 3. 动态更新页面内容
+        }
+
+        // === 页面加载完成后的初始化 ===
+        window.addEventListener('load', function() {
+            // 页面完全加载后执行
+            console.log('页面加载完成！');
+            // 可以在这里添加：
+            // - 初始化函数
+            // - 加载初始数据
+            // - 设置事件监听器
+        });
+
+        // === 学习提示 ===
+        /*
+        下一步可以学习：
+        1. CSS Flexbox 和 Grid 布局
+        2. JavaScript DOM 操作
+        3. 事件处理
+        4. API 调用
+        5. 响应式设计
+        */
+    </script>
+</body>
+</html>
